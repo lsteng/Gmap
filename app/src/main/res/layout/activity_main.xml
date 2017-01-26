@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="開啟地圖"
+            />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:text="到達提醒設定"/>
+
+        <EditText
+            android:id="@+id/addressET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:hint="請輸入提醒地址 轉換座標"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/transferBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="轉換"
+                />
+
+            <EditText
+                android:id="@+id/locationET"
+                android:layout_toRightOf="@id/transferBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:hint="或直接輸入座標"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:text="開始提醒距離"
+            />
+
+
+        <RadioGroup
+            android:id="@+id/radioG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/meter50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="50M"/>
+
+            <RadioButton
+                android:id="@+id/meter100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100M"/>
+
+            <RadioButton
+                android:id="@+id/meter200"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="200M"/>
+
+            <RadioButton
+                android:id="@+id/meter300"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="300M"/>
+
+            <RadioButton
+                android:id="@+id/meter500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500M"/>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="啟用通知提醒"
+            />
+
+        <Button
+            android:id="@+id/stopButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="停用通知提醒"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>
