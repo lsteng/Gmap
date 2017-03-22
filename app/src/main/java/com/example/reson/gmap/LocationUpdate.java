@@ -175,25 +175,27 @@ public class LocationUpdate implements
         DistanceSort(Pois);
 
         //印出我的座標-經度緯度
-//        String X = String.valueOf(place.latitude).substring(0, 7);
-//        String Y = String.valueOf(place.longitude).substring(0, 7);
-//        mTV.setText("目前位置-"+"緯度: "+X + ", 經度: "+Y);
+        String X = String.valueOf(place.latitude).substring(0, 7);
+        String Y = String.valueOf(place.longitude).substring(0, 7);
+        //目前位置
+        String title = "緯度:"+X + ",經度:"+Y;;
+        //解析座標地址
+        String address = getAddressByLocation(null, place);
+        String msg = address;
+        notifyMSG(title, msg);
 
         //for迴圈，印出景點店家名稱及距離，並依照距離由近至遠排列
         //第一筆為最近的景點店家，最後一筆為最遠的景點店家
-        for(int i = 0 ; i < Pois.size() ; i++ )
-        {
-            String title = "地點: "+Pois.get(i).getName();
-            String msg   = "距離為: "+DistanceText(Pois.get(i).getDistance());
-
-            int distanceNotify = MainActivity.distanceNotify;
-            if(Pois.get(i).getDistance() < distanceNotify){
-                notifyMSG(title, msg);
-            }
-        }
-
-        //解析座標地址
-//        mADD.setText(getAddressByLocation(null, place));
+//        for(int i = 0 ; i < Pois.size() ; i++ )
+//        {
+//            String title = "地點: "+Pois.get(i).getName();
+//            String msg   = "距離為: "+DistanceText(Pois.get(i).getDistance());
+//
+//            int distanceNotify = MainActivity.distanceNotify;
+//            if(Pois.get(i).getDistance() < distanceNotify){
+//                notifyMSG(title, msg);
+//            }
+//        }
     }
 
     private void notifyMSG(String title, String text){
@@ -215,8 +217,8 @@ public class LocationUpdate implements
                 .setContentText(text)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(autoCancel)
-//                .build(); // 建立通知
-                .getNotification();
+                .build(); // 建立通知
+//                .getNotification();
 
         //notification.defaults |= Notification.DEFAULT_ALL;
         //notification.defaults |= Notification.DEFAULT_VIBRATE;

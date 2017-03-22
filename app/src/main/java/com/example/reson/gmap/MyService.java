@@ -13,24 +13,41 @@ import java.util.Date;
 public class MyService extends Service {
     private Handler handler = new Handler();
     private LocationUpdate locationUpdate;
+    private final int timing = 1000;
 
     @Override
     public IBinder onBind(Intent intent) {
+        //綁定服務
         return null;
     }
 
     @Override
-    public void onStart(Intent intent, int startId) {
-//        handler.postDelayed(showTime, 1000);
+    public void onCreate() {
+        //建立服務
+        super.onCreate();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //啟動服務
         locationUpdate = new LocationUpdate(getApplicationContext());
-        super.onStart(intent, startId);
+//        handler.postDelayed(showTime, timing);
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        //解除綁定服務
+        return super.onUnbind(intent);
     }
 
     @Override
     public void onDestroy() {
-//        handler.removeCallbacks(showTime);
-        locationUpdate.stopService();
         super.onDestroy();
+        //銷毀服務
+//        handler.removeCallbacks(showTime);
+//        notificationManager.cancel(notifyID);
+        locationUpdate.stopService();
     }
 
     private Runnable showTime = new Runnable() {
@@ -39,13 +56,16 @@ public class MyService extends Service {
 //            Log.i("time:", new Date().toString());
             String msg = new Date().toString();
             notifyMSG(msg);
-            handler.postDelayed(this, 1000);
+            handler.postDelayed(this, timing);
         }
     };
 
+    private NotificationManager notificationManager;
+    private Notification notification;
+    private final int notifyID = 1; // 通知的識別號碼
     private void notifyMSG(String text){
-        final int notifyID = 1; // 通知的識別號碼
         final boolean autoCancel = true; // 點擊通知後是否要自動移除掉通知
+        final int priority = Notification.PRIORITY_MAX; // 通知的優先權，可用PRIORITY_MAX、PRIORITY_HIGHT、PRIORITY_LOW、PRIORITY_MIN、PRIORITY_DEFAULT
 
         final int requestCode = notifyID; // PendingIntent的Request Code
 //        final Intent intent = getIntent(); // 目前Activity的Intent
@@ -59,15 +79,19 @@ public class MyService extends Service {
 //                //	  PendingIntent.FLAG_ONE_SHOT
 //        ); // 取得PendingIntent
 
-        final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE); // 取得系統的通知服務
-        final Notification notification = new Notification.Builder(getApplicationContext())
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE); // 取得系統的通知服務
+        notification = new Notification.Builder(getApplicationContext())
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("log目前時間")
                 .setContentText(text)
 //                .setContentIntent(pendingIntent)
                 .setAutoCancel(autoCancel)
-//                .build(); // 建立通知
-                .getNotification();
+                .setPriority(priority)
+                .build(); // 建立通知
+//                .getNotification();
+
+        notification.flags |= Notification.FLAG_ONGOING_EVENT; // 將ongoing(持續)的flag添加到通知中
+
         notificationManager.notify(notifyID, notification); // 發送通知
     }
 }
